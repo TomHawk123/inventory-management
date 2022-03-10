@@ -1,14 +1,29 @@
-// import React, { useEffect, useState } from "react"
-// import { Link, useHistory } from "react-router-dom/"
+import React, { useEffect, useState } from "react"
 
-// export const InventoryList = () => {
+// export a function that will return the HTML
+export const InventoryList = () => {
+    // set up variables for application state with useState hook
+    const [inventoryList, setInventoryList] = useState([])
 
-//     const [inventoryItems, setInventoryItems] = useState([])
-//         const history = useHistory()
-//         useEffect(
-//             () => {
-                
-//             },
-//             []
-//         )
-// }
+    // fetch inventory list when inventory state changes
+    useEffect(
+        () => {
+            fetch("http://localhost:8088/inventory")
+                .then(r => r.json())
+                .then(inventoryArray => {
+                    setInventoryList(inventoryArray)
+                })
+        },
+        [] // DON'T FORGET to add inventoryList when state change monitoring is necessary
+    )
+
+    return (
+        <>
+            {
+                inventoryList.map(
+                    inventoryObject => <h4 key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.name}</h4>
+                )
+            }
+        </>
+    )
+}
