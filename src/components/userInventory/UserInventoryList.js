@@ -9,7 +9,8 @@ export const UserInventoryList = () => {
     // fetch inventory list when inventory state changes
     useEffect(
         () => {
-            fetch("http://localhost:8088/inventory?_expand=user")
+            // use expand to get access to user properties  
+            fetch("http://localhost:8088/inventory?_expand=user&_expand=type")
                 .then(r => r.json())
                 .then(inventoryArray => {
                     setUserInventoryList(inventoryArray)
@@ -28,7 +29,6 @@ export const UserInventoryList = () => {
         },
         [userInventoryArray]
     )
-    // for each user, find each (filter) inventory item they've checked out
     return (
         <>
 
