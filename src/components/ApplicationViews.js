@@ -1,16 +1,27 @@
-// import React from "react";
-// import { Route } from "react-router-dom"
+import React from "react";
+import { Route } from "react-router-dom"
+import { InventoryList } from "./inventory/InventoryList";
+import { UserInventoryList } from "./userInventory/UserInventoryList";
+import { UsersList } from "./users/Users";
 
 
 
 
 
-// export const ApplicationViews = () => {
-//     return (
-//         <>
-//             <Route path="/inventory">
-                
-//                 </Route>
-//         </>
-//     )
-// }
+export const ApplicationViews = () => {
+    return (
+        <>
+            <Route exact path="/inventory">
+                <InventoryList />
+                </Route>
+
+                <Route exact path="/users">
+                <UsersList />
+                </Route>
+
+                <Route exact path="/inventory?_expand=user&_expand=type">
+                <UserInventoryList />
+                </Route>
+        </>
+    )
+}
