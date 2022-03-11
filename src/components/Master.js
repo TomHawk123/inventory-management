@@ -1,28 +1,33 @@
-import React from "react"
-import { InventoryList } from "./inventory/InventoryList"
-import { NavBar } from "./nav/NavBar"
-import { UserInventoryList } from "./userInventory/UserInventoryList"
-import { UsersList } from "./users/Users"
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { ApplicationViews } from "./ApplicationViews";
+import { NavBar } from "./nav/NavBar";
+import { Login } from "./auth/Login";
+import { Register } from "./auth/Register";
+import "./Master.css";
 
-// export a function that will return the HTML
-export const Master = () => {
-    // set up variables for application state with useState hook
+export const Master = () => (
+  <>
+    <Route
+      render={() => {
+        if (localStorage.getItem("inventory__user")) {
+          return (
+            <>
+              <NavBar />
+              <ApplicationViews />
+            </>
+          );
+        } else {
+          return <Redirect to="/login" />;
+        }
+      }}
+    />
 
-
-
-    return (
-        <>
-            <NavBar />
-            <h1>Inventory Management</h1>
-
-            <h2>Inventory List</h2>
-            <InventoryList />
-
-            <h2>Employees</h2>
-            <UsersList />
-
-            <h2>User's Inventory List</h2>
-            <UserInventoryList />
-        </>
-    )
-}
+    <Route path="/login">
+      <Login />
+    </Route>
+    <Route path="/register">
+      <Register />
+    </Route>
+  </>
+);
