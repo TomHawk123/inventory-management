@@ -14,3 +14,15 @@ export const fetchUsers = () =>
 export const fetchUserInventory = () =>
     fetch(`${API}/inventory?_expand=user&_expand=type`)
         .then(r => r.json())
+
+export const sendItem = (newItem) => {
+    const fetchOption = {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(newItem)
+    }
+    return fetch("http://localhost:8088/inventory", fetchOption)
+        .then(res => res.json())
+}

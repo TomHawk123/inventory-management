@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import { fetchInventory } from "../ApiManager"
 
 // export a function that will return the HTML
 export const InventoryList = () => {
+    const history = useHistory()
     // set up variables for application state with useState hook
     const [inventoryList, setInventoryList] = useState([])
     const [totalItemsMessage, updateMessage] = useState('')
@@ -38,6 +40,8 @@ export const InventoryList = () => {
                     inventoryObject => <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.name}</p>
                 )
             }
+            <button onClick={() => history.push("/inventory/create")}>Create New Item</button>
+            <div></div>
         </>
     )
 }
