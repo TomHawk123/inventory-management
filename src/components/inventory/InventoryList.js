@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import { fetchInventory } from "../ApiManager"
 
 // export a function that will return the HTML
 export const InventoryList = () => {
+    const history = useHistory()
     // set up variables for application state with useState hook
     const [inventoryList, setInventoryList] = useState([])
     const [totalItemsMessage, updateMessage] = useState('')
@@ -20,6 +22,12 @@ export const InventoryList = () => {
 
     useEffect(
         () => {
+
+        },
+        [inventoryList])
+
+    useEffect(
+        () => {
             if (inventoryList.length === 1) {
                 updateMessage("You have 1 inventory item")
             } else {
@@ -29,15 +37,40 @@ export const InventoryList = () => {
         [inventoryList]
     )
 
+    const deleteItem = (id) => {
+        fetch(`http://localhost:8088/inventory/${id}`, {
+            method: "DELETE"
+        })
+    }
+
     return (
         <>
 
             <div>{totalItemsMessage}</div>
-            {
-                inventoryList.map(
-                    inventoryObject => <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.name}</p>
-                )
-            }
+
+
+            <div className="inventory__List">
+                {
+                    inventoryList.map(
+                        inventoryObject => <div>
+                            <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.name}</p>
+                            <button
+                                key={`deleteItem--${inventoryObject.id}`}
+                                onClick={() => {
+                                    deleteItem(inventoryObject.id)
+                                }}>
+                                Delete
+                            </button>
+                        </div>
+                    )
+                }
+            </div>
+            <button
+                onClick={
+                    () => history.push("/inventory/create")}>Create New Item
+            </button>
+
+            <div></div>
         </>
     )
 }
