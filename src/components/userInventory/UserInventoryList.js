@@ -10,7 +10,7 @@ export const UserInventoryList = () => {
     useEffect(
         () => {
             // use expand to get access to user properties  
-            fetch("http://localhost:8088/inventory?_expand=user&_expand=type")
+            fetch("http://localhost:8088/userInventory?_expand=user&_expand=type")
                 .then(r => r.json())
                 .then(inventoryArray => {
                     setUserInventoryList(inventoryArray)
@@ -36,7 +36,7 @@ export const UserInventoryList = () => {
             
             {
                 userInventoryArray.map(
-                    inventoryObject => <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.name}: {inventoryObject.user.name}</p>
+                    inventoryObject => <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.type.nameOfType}, {inventoryObject.name}: {inventoryObject.user.name}</p>
                 )
             }
         </>

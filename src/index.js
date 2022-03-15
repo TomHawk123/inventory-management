@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Master } from './components/Master';
 import './index.css';
-import "./components/inventory/Inventory.css"
+import "./components/inventory/Inventory.css";
+import "./components/Master.css";
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 

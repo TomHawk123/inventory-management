@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom"
 import { InventoryForm } from "./inventory/AddInventoryForm";
-// import { InventoryForm } from "./inventory/AddInventoryForm";
 import { InventoryList } from "./inventory/InventoryList";
 import { UserInventoryList } from "./userInventory/UserInventoryList";
 import { UsersList } from "./users/Users";
@@ -21,7 +20,7 @@ export const ApplicationViews = () => {
                 <UsersList />
             </Route>
 
-            <Route exact path="/inventory?_expand=user&_expand=type">
+            <Route exact path="/userInventory">
                 <UserInventoryList />
             </Route>
 

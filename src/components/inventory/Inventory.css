@@ -1,4 +1,8 @@
-.inventoryList {
+.inventory__List {
     display: flex;
-    justify-content: center;
+}
+
+.inventoryButton {
+    width: 6rem;
+    height: 2.5rem;
 }
