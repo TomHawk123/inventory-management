@@ -12,14 +12,14 @@ export const fetchUsers = () =>
         .then(r => r.json())
 
 export const fetchUserInventory = () =>
-    fetch(`${API}/inventory?_expand=user&_expand=type`)
+    fetch(`${API}/userInventory`)
         .then(r => r.json())
 
 export const fetchInventoryTypes = () =>
     fetch(`${API}/types`)
         .then(r => r.json())
 
-export const sendItem = (newItem) => {
+export const sendItem = async (newItem) => {
     const fetchOption = {
         method: "POST",
         headers: {
@@ -27,8 +27,18 @@ export const sendItem = (newItem) => {
         },
         body: JSON.stringify(newItem)
     }
-    return fetch("http://localhost:8088/inventory", fetchOption)
-        .then(res => res.json())
+    const res = await fetch("http://localhost:8088/inventory", fetchOption)
+    return await res.json()
 }
 
-
+export const sendUserItem = async (inventoryObject) => {
+    const fetchOption = {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(inventoryObject)
+    }
+    const res = await fetch("http://localhost:8088/userInventory", fetchOption)
+    return await res.json()
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
-import { fetchInventory } from "../ApiManager"
+import { fetchInventory, sendUserItem } from "../ApiManager"
 
 // export a function that will return the HTML
 export const InventoryList = () => {
@@ -17,7 +17,7 @@ export const InventoryList = () => {
                     setInventoryList(inventoryArray)
                 })
         },
-        [] // DON'T FORGET to add inventoryList when state change monitoring is necessary
+        [] // DON'T ADD STATE VARIABLES BEING LISTENED FOR TO BASIC FETCHES (INFINITE LOOP)
     )
 
     useEffect(
@@ -40,27 +40,57 @@ export const InventoryList = () => {
     const deleteItem = (id) => {
         fetch(`http://localhost:8088/inventory/${id}`, {
             method: "DELETE"
-        })
+        }).then(fetchInventory)
+            .then(inventoryArray => {
+                setInventoryList(inventoryArray)
+            })
     }
 
+    // if (inventoryObject.id !== userInventory.user.id)
+    // Make a timestamp property on the inventoryObject on the inventoryList
+
+
+    // if inventory.quantity <= 0, remove the checkout button
+    // else have the checkout button
+
+    if (inventoryObject.quantity <= 0) {
+        return <button className="inventoryButton"
+        onClick={
+            () => sendUserItem(inventoryObject)
+        }>Checkout
+    </button>
+    }
     return (
         <>
 
             <div>{totalItemsMessage}</div>
 
 
-            <div className="inventory__List">
+            <div>
                 {
                     inventoryList.map(
-                        inventoryObject => <div>
-                            <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.name}</p>
-                            <button
-                                key={`deleteItem--${inventoryObject.id}`}
-                                onClick={() => {
-                                    deleteItem(inventoryObject.id)
-                                }}>
-                                Delete
-                            </button>
+                        inventoryObject => <div className="inventory__List" key={`deleteItem--${inventoryObject.id}`}>
+
+
+
+                            <p>
+                                
+                                <button className="inventoryButton"
+                                    onClick={
+                                        () => sendUserItem(inventoryObject)
+                                    }>Checkout
+                                </button>
+
+                                {inventoryObject.type.nameOfType} {inventoryObject.name}
+
+                                <button className="inventoryButton"
+                                    onClick={() => {
+                                        deleteItem(inventoryObject.id)
+                                    }}>
+                                    Delete
+                                </button>
+                            </p>
+
                         </div>
                     )
                 }
@@ -69,11 +99,12 @@ export const InventoryList = () => {
                 onClick={
                     () => history.push("/inventory/create")}>Create New Item
             </button>
-
-            <div></div>
         </>
     )
 }
+
+// add a checkout button that will push the item checked out into the userInventory array in the json database
+
 
 
 

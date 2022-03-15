@@ -12,7 +12,7 @@ export const NavBar = (props) => {
                 <Link className="navbar__link" to="/users">Employees</Link>
             </li>
             <li className="navbar__item active">
-                <Link className="navbar__link" to="/inventory?_expand=user&_expand=type">Employee Inventory</Link>
+                <Link className="navbar__link" to="/userInventory">Employee Inventory</Link>
             </li>
             <li className="navbar__item active">
                 <Link className="navbar__link" to="#"
@@ -22,7 +22,6 @@ export const NavBar = (props) => {
                             localStorage.removeItem("inventory__user")
                         }
                     }
-
                 >Logout</Link>
             </li>
         </ul>
