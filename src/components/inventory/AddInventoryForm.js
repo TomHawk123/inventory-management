@@ -42,7 +42,9 @@ export const InventoryForm = () => {
             })
 
     }
-
+    // inside the map¿
+        // check if any of the values equal null, don't map¿
+            // if ()
     return (
         <form className="inventoryForm">
             <h2 className="inventoryForm__title">New Inventory Item</h2>
@@ -60,7 +62,7 @@ export const InventoryForm = () => {
                         }>
 
                         <option value="" >Item type...</option>
-                        {itemType.map(itemType => <option key={`type--${itemType.id}`}value={itemType.id}>{itemType.nameOfType}</option>)}
+                        {itemType.map(itemType => <option required key={`type--${itemType.id}`}value={itemType.id}>{itemType.nameOfType}</option>)}
 
                     </select>
                 </div>

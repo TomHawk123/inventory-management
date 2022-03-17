@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
-import { fetchInventory, sendUserItem } from "../ApiManager"
+import { fetchInventory, fetchUserInventory, sendUserItem } from "../ApiManager"
 
 // export a function that will return the HTML
 export const InventoryList = () => {
     const history = useHistory()
     // set up variables for application state with useState hook
     const [inventoryList, setInventoryList] = useState([])
+    const [userInventory, setUserInventory] = useState([])
     const [totalItemsMessage, updateMessage] = useState('')
 
     // fetch inventory list when inventory state changes
@@ -16,15 +17,13 @@ export const InventoryList = () => {
                 .then(inventoryArray => {
                     setInventoryList(inventoryArray)
                 })
+            fetchUserInventory()
+                .then(userInventoryArray => {
+                    setUserInventory(userInventoryArray)
+                })
         },
         [] // DON'T ADD STATE VARIABLES BEING LISTENED FOR TO BASIC FETCHES (INFINITE LOOP)
     )
-
-    useEffect(
-        () => {
-
-        },
-        [inventoryList])
 
     useEffect(
         () => {
@@ -38,7 +37,7 @@ export const InventoryList = () => {
     )
 
     const deleteItem = (id) => {
-        fetch(`http://localhost:8088/inventory/${id}`, {
+        fetch(`http://localhost:8088/inventories/${id}`, {
             method: "DELETE"
         }).then(fetchInventory)
             .then(inventoryArray => {
@@ -46,20 +45,7 @@ export const InventoryList = () => {
             })
     }
 
-    // if (inventoryObject.id !== userInventory.user.id)
-    // Make a timestamp property on the inventoryObject on the inventoryList
 
-
-    // if inventory.quantity <= 0, remove the checkout button
-    // else have the checkout button
-
-    if (inventoryObject.quantity <= 0) {
-        return <button className="inventoryButton"
-        onClick={
-            () => sendUserItem(inventoryObject)
-        }>Checkout
-    </button>
-    }
     return (
         <>
 
@@ -74,14 +60,24 @@ export const InventoryList = () => {
 
 
                             <p>
-                                
-                                <button className="inventoryButton"
-                                    onClick={
-                                        () => sendUserItem(inventoryObject)
-                                    }>Checkout
-                                </button>
+                                {inventoryObject.quantity > 0 ?
+                                    <button className="inventoryButton"
+                                        onClick={
+                                            () => {
+                                                sendUserItem(inventoryObject)
+                                                .then(() => {
+                                                    return fetchInventory()
+                                                })
+                                                .then(inventoryArray => {
+                                                    setInventoryList(inventoryArray)
+                                                })
+                                            }
+                                        }>Checkout
+                                    </button> :
+                                    null
+                                }
 
-                                {inventoryObject.type.nameOfType} {inventoryObject.name}
+                                {inventoryObject.type.nameOfType}; {inventoryObject.name}
 
                                 <button className="inventoryButton"
                                     onClick={() => {
@@ -103,7 +99,10 @@ export const InventoryList = () => {
     )
 }
 
-// add a checkout button that will push the item checked out into the userInventory array in the json database
+// if inventory item quantity value is >= 1
+    // display the checkout button
+// else don't display the checkout button
+
 
 
 

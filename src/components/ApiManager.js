@@ -4,7 +4,7 @@ const API = "http://localhost:8088"
 // export a fetch call for each data type?
 // A:
 export const fetchInventory = () =>
-    fetch(`${API}/inventory?_expand=user&_expand=type`)
+    fetch(`${API}/inventories?_expand=user&_expand=type`)
         .then(r => r.json())
 
 export const fetchUsers = () =>
@@ -12,7 +12,7 @@ export const fetchUsers = () =>
         .then(r => r.json())
 
 export const fetchUserInventory = () =>
-    fetch(`${API}/userInventory`)
+    fetch(`${API}/userInventory?_expand=user&_expand=inventory&userId=${parseInt(localStorage.getItem("inventory__user"))}`)
         .then(r => r.json())
 
 export const fetchInventoryTypes = () =>
@@ -27,18 +27,48 @@ export const sendItem = async (newItem) => {
         },
         body: JSON.stringify(newItem)
     }
-    const res = await fetch("http://localhost:8088/inventory", fetchOption)
+    const res = await fetch("http://localhost:8088/inventories", fetchOption)
     return await res.json()
 }
 
-export const sendUserItem = async (inventoryObject) => {
+export const sendUserItem = (inventoryObject) => {
+    const newUserInventoryObject = {
+        inventoryId: inventoryObject.id,
+        userId: parseInt(localStorage.getItem("inventory__user")),
+        timestamp: Math.floor(Date.now() / 1000),
+    }
     const fetchOption = {
         method: "POST",
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify(inventoryObject)
+        body: JSON.stringify(newUserInventoryObject)
     }
-    const res = await fetch("http://localhost:8088/userInventory", fetchOption)
-    return await res.json()
+    return fetch("http://localhost:8088/userInventory", fetchOption)
+        .then(() => {
+            const fetchOption = {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({ quantity: inventoryObject.quantity - 1 })
+            }
+            return fetch(`http://localhost:8088/inventories/${inventoryObject.id}`, fetchOption)
+        })
+}
+
+
+export const returnItem = (inventory, userInventoryId) => {
+    const fetchOption = {
+        method: "PATCH",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({ quantity: inventory.quantity + 1 })
+    }
+    return fetch(`http://localhost:8088/inventories/${inventory.id}`, fetchOption)
+        .then(() => {
+        return fetch(`${API}/userInventory/${userInventoryId}`, { method: "DELETE" })
+        })
+
 }
