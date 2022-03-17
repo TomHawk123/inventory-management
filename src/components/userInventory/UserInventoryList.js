@@ -1,22 +1,44 @@
 import React, { useEffect, useState } from "react"
+import { fetchInventoryTypes, fetchUserInventory, returnItem } from "../ApiManager"
 
 // export a function that will return the HTML
 export const UserInventoryList = () => {
     // set up variables for application state with useState hook
     const [userInventoryArray, setUserInventoryList] = useState([])
     const [totalItemsMessage, updateMessage] = useState('')
+    const [types, setTypes] = useState([])
+    const [inventorySwitch, setInventorySwitch] = useState(false)
 
     // fetch inventory list when inventory state changes
     useEffect(
         () => {
             // use expand to get access to user properties  
-            fetch("http://localhost:8088/userInventory?_expand=user&_expand=type")
-                .then(r => r.json())
+            fetchUserInventory()
                 .then(inventoryArray => {
                     setUserInventoryList(inventoryArray)
+                    setInventorySwitch(true)
+
                 })
         },
-        [] // DON'T FORGET to add userInventoryArray when state change monitoring is necessary
+        []
+    )
+
+    useEffect(
+        () => {
+            fetchInventoryTypes()
+                .then(typeArray => {
+                    let copy = [...userInventoryArray]
+                    let copyTypes = copy.map(inventory => {
+                        let found = typeArray.find(type => type.id === inventory.inventory.typeId)
+                        inventory.inventory.type = found
+
+                        return inventory
+                    })
+                    setUserInventoryList(copyTypes)
+                    setTypes(typeArray)
+                })
+        },
+        [inventorySwitch]
     )
 
     useEffect(
@@ -29,70 +51,44 @@ export const UserInventoryList = () => {
         },
         [userInventoryArray]
     )
+    // RETURN BUTTON
+// When button is clicked, subtract one from userInventory item quanity and add one to 
+// master inventory item.quantity. Use Patch method as a fetchOption
     return (
         <>
 
             <div>{totalItemsMessage}</div>
-            
+
             {
                 userInventoryArray.map(
-                    inventoryObject => <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.type.nameOfType}, {inventoryObject.name}: {inventoryObject.user.name}</p>
+                    inventoryObject => {
+                        return <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.inventory.type?.nameOfType}; {inventoryObject.inventory.name}: {inventoryObject.user.name}
+                        <button
+                        onClick={
+                            ()=>{returnItem(inventoryObject.inventory, inventoryObject.id)
+                            .then(()=>{
+                                fetchUserInventory()
+                                    .then(inventoryArray => {
+                                    setUserInventoryList(inventoryArray)
+                                    setInventorySwitch(!inventorySwitch)
+                                    })
+                                })
+                            }
+                        }
+                        >
+                            Return
+                        </button>
+                        </p>
+                    }
                 )
             }
         </>
     )
 }
 
+    
 
-// import React, { useEffect, useState } from "react"
-// import { Link, useHistory } from "react-router-dom/"
-
-// export const TicketList = () => {
-//     // create a New state variable
-//     const [serviceTickets, setServiceTicket] = useState([])
-//     const history = useHistory()
-//     useEffect(
-//         () => {
-//             fetch("http://localhost:8088/serviceTickets?_expand=employee&_expand=customer")
-//                 .then(res => res.json())
-//                 .then((serviceTicketsArray) => {
-//                     setServiceTicket(serviceTicketsArray)
-//                 })
-//         }, [serviceTickets]
-//     )
-
-//     const deleteTicket = (id) => {
-//         fetch(`http://localhost:8088/serviceTickets/${id}`, {
-//             method: "DELETE"
-//         })
-//     }
-
-
-//     // useEffect(() => {
-//     //     const activeTicketCount = serviceTickets.filter(t => t.dateCompleted === "").length
-//     //     setServiceTicket(`There are ${activeTicketCount} open tickets`)
-//     // }, [serviceTickets])
-
-//     return (
-//         <>
-//             <h2> Service Tickets</h2>
-//             <div>
-//                 <button onClick={() => history.push("/tickets/create")}>Create Ticket</button>
-//             </div>
-//             {
-//                 serviceTickets.map(
-//                     (serviceTicket) => {
-//                         return <div key={`serviceTicket--${serviceTicket.id}`}>
-//                             <p className={serviceTicket.emergency ? `emergency` : `serviceTicket`}>
-//                                 {serviceTicket.emergency ? "🚑" : ""} <Link to={`/tickets/${serviceTicket.id}`}>{serviceTicket.description}</Link> submitted by {serviceTicket.customer.name} and worked on by {serviceTicket.employee.name}
-//                                 <button onClick={() => {
-//                                     deleteTicket(serviceTicket.id)
-//                                 }}>Delete</button>
-//                             </p>
-//                         </div>
-//                     }
-//                 )
-//             }
-//         </>
-//     )
-// }
+// STRETCH GOAL: 
+// if quantity property of userInventory is 0, 
+    // then delete the item from user's inventory
+        // else use fetch call with "PATCH" fetch option to subtract one from user's inventory and add one to master inventory
