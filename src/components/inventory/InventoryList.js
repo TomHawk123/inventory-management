@@ -22,7 +22,7 @@ export const InventoryList = () => {
                     setUserInventory(userInventoryArray)
                 })
         },
-        [] // DON'T ADD STATE VARIABLES BEING LISTENED FOR TO BASIC FETCHES (INFINITE LOOP)
+        [] // Only run when initial JSX rendering is complete.
     )
 
     useEffect(
@@ -65,19 +65,24 @@ export const InventoryList = () => {
                                         onClick={
                                             () => {
                                                 sendUserItem(inventoryObject)
-                                                .then(() => {
-                                                    return fetchInventory()
-                                                })
-                                                .then(inventoryArray => {
-                                                    setInventoryList(inventoryArray)
-                                                })
+                                                    .then(() => {
+                                                        return fetchInventory()
+                                                    })
+                                                    .then(inventoryArray => {
+                                                        setInventoryList(inventoryArray)
+                                                    })
                                             }
                                         }>Checkout
                                     </button> :
                                     null
                                 }
 
-                                {inventoryObject.type.nameOfType}; {inventoryObject.name}
+                                {inventoryObject.quantity}X: {inventoryObject.type.nameOfType}; {inventoryObject.name}
+
+                                <button
+                                    onClick={
+                                        () => history.push(`/inventory/${inventoryObject.id}`)}>Edit
+                                </button>
 
                                 <button className="inventoryButton"
                                     onClick={() => {

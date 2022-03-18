@@ -27,7 +27,7 @@ export const sendItem = async (newItem) => {
         },
         body: JSON.stringify(newItem)
     }
-    const res = await fetch("http://localhost:8088/inventories", fetchOption)
+    const res = await fetch(`${API}/inventories`, fetchOption)
     return await res.json()
 }
 
@@ -44,7 +44,7 @@ export const sendUserItem = (inventoryObject) => {
         },
         body: JSON.stringify(newUserInventoryObject)
     }
-    return fetch("http://localhost:8088/userInventory", fetchOption)
+    return fetch(`${API}/userInventory`, fetchOption)
         .then(() => {
             const fetchOption = {
                 method: "PATCH",
@@ -53,7 +53,7 @@ export const sendUserItem = (inventoryObject) => {
                 },
                 body: JSON.stringify({ quantity: inventoryObject.quantity - 1 })
             }
-            return fetch(`http://localhost:8088/inventories/${inventoryObject.id}`, fetchOption)
+            return fetch(`${API}/inventories/${inventoryObject.id}`, fetchOption)
         })
 }
 
@@ -66,9 +66,19 @@ export const returnItem = (inventory, userInventoryId) => {
         },
         body: JSON.stringify({ quantity: inventory.quantity + 1 })
     }
-    return fetch(`http://localhost:8088/inventories/${inventory.id}`, fetchOption)
+    return fetch(`${API}/inventories/${inventory.id}`, fetchOption)
         .then(() => {
-        return fetch(`${API}/userInventory/${userInventoryId}`, { method: "DELETE" })
+            return fetch(`${API}/userInventory/${userInventoryId}`, { method: "DELETE" })
         })
 
+}
+
+export const sendEditedItem = (newItem) => {
+    return fetch(`${API}/inventories/${newItem.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(newItem)
+    })
 }
