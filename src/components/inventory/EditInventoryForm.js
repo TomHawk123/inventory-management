@@ -57,7 +57,7 @@ export const EditInventoryForm = () => {
                             }
                         }>
 
-                        <option value="" >Item type...</option>
+                        <option value="0" >Item type...</option>
                         {itemType.map(itemType => <option required key={`type--${itemType.id}`} value={itemType.id}>{itemType.nameOfType}</option>)}
 
                     </select>
@@ -74,10 +74,10 @@ export const EditInventoryForm = () => {
                                 copy.name = e.target.value
                                 update(copy)
                             }}
-                        value={item.name}
                         required autoFocus
                         type="text"
                         className="form-control"
+                        defaultValue={item.name}
                     />
                 </div>
             </fieldset>
@@ -96,7 +96,7 @@ export const EditInventoryForm = () => {
                         required autoFocus
                         type="number" min="1"
                         className="form-control"
-                        value={item.quantity} />
+                        defaultValue={item.quantity} />
                 </div>
             </fieldset>
 
@@ -113,7 +113,7 @@ export const EditInventoryForm = () => {
                         required autoFocus
                         type="url"
                         className="form-control"
-                        value={item.picture} />
+                        defaultValue={item.picture} />
                 </div>
             </fieldset>
 
