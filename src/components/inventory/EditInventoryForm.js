@@ -1,50 +1,53 @@
 import React, { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom";
-import { fetchInventoryTypes, sendItem, fetchInventory} from "../ApiManager";
+import { useHistory, useParams } from "react-router-dom";
+import { fetchInventoryTypes, sendEditedItem } from "../ApiManager";
+
 
 export const EditInventoryForm = () => {
+
     const history = useHistory()
-    const [item, update] = useState({});
+    const [item, update] = useState({}
+    );
     const [itemType, updateItemType] = useState([])
+    const { itemId } = useParams() // Allows to bring in route parameters from the url to use in the component
 
     useEffect(
         () => {
-            fetchInventory()
-                .then(inventoryObject => update(inventoryObject))
             fetchInventoryTypes()
                 .then(type => updateItemType(type))
+            return fetch(`http://localhost:8088/inventories/${itemId}`)
+                .then(r => r.json())
+                .then(inventoryObject => update(inventoryObject))
         },
         []
     )
 
-
-
-    const saveItem = e => {
+    const editItem = e => {
         e.preventDefault()
-
 
         const newItem = {
             name: item.name,
             userId: parseInt(localStorage.getItem("inventory__user")),
             typeId: parseInt(item.typeId),
             quantity: item.quantity,
-            picture: item.picture
+            picture: item.picture,
+            id: item.id
         }
 
-        return sendItem(newItem)
+        sendEditedItem(newItem)
             .then(() => {
-                history.push(`/inventory`)
+                history.push("/inventory")
             })
-
     }
+
 
     return (
         <form className="inventoryForm">
-            <h2 className="inventoryForm__title">New Inventory Item</h2>
+            <h2 className="inventoryForm__title">Edit Inventory Item</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="name">Type</label>
-                    <select name="location" type="select"
+                    <select value={item.typeId} name="location" type="select"
                         required autoFocus
                         onChange={
                             e => {
@@ -60,6 +63,7 @@ export const EditInventoryForm = () => {
                     </select>
                 </div>
             </fieldset>
+
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="description">Description:</label>
@@ -70,12 +74,14 @@ export const EditInventoryForm = () => {
                                 copy.name = e.target.value
                                 update(copy)
                             }}
+                        value={item.name}
                         required autoFocus
                         type="text"
                         className="form-control"
-                        placeholder="10X10, pop-up, stand-alone, 6 ft., etc." />
+                    />
                 </div>
             </fieldset>
+
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="quantity">quantity:</label>
@@ -90,9 +96,10 @@ export const EditInventoryForm = () => {
                         required autoFocus
                         type="number" min="1"
                         className="form-control"
-                        placeholder="Quantity..." />
+                        value={item.quantity} />
                 </div>
             </fieldset>
+
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="picture">Picture Url:</label>
@@ -106,12 +113,14 @@ export const EditInventoryForm = () => {
                         required autoFocus
                         type="url"
                         className="form-control"
-                        placeholder="image@url.com" />
+                        value={item.picture} />
                 </div>
             </fieldset>
-            <button className="btn btn-primary" onClick={saveItem}>
+
+            <button className="btn btn-primary" onClick={editItem}>
                 Submit Item
             </button>
+
         </form>
     )
 }

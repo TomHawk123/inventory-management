@@ -81,7 +81,7 @@ export const InventoryList = () => {
 
                                 <button
                                     onClick={
-                                        () => history.push(`/inventories/${inventoryObject.id}`)}>Edit
+                                        () => history.push(`/inventory/${inventoryObject.id}`)}>Edit
                                 </button>
 
                                 <button className="inventoryButton"
