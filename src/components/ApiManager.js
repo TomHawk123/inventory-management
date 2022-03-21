@@ -35,7 +35,7 @@ export const sendUserItem = (inventoryObject) => {
     const newUserInventoryObject = {
         inventoryId: inventoryObject.id,
         userId: parseInt(localStorage.getItem("inventory__user")),
-        timestamp: Math.floor(Date.now() / 1000),
+        timestamp: Date.now()
     }
     const fetchOption = {
         method: "POST",

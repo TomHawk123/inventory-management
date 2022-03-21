@@ -8,9 +8,12 @@ export const NavBar = (props) => {
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/inventory">Inventory</Link>
             </li>
-            <li className="navbar__item active">
-                <Link className="navbar__link" to="/users">Employees</Link>
-            </li>
+            {localStorage.getItem("inventory__admin") ?
+                <li className="navbar__item active">
+                    <Link className="navbar__link" to="/users">Employees</Link>
+                </li>
+                : null
+            }
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/userInventory">Employee Inventory</Link>
             </li>
@@ -20,6 +23,7 @@ export const NavBar = (props) => {
                     onClick={
                         () => {
                             localStorage.removeItem("inventory__user")
+                            localStorage.removeItem("inventory__admin")
                         }
                     }
                 >Logout</Link>

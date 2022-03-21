@@ -79,27 +79,42 @@ export const InventoryList = () => {
 
                                 {inventoryObject.quantity}X: {inventoryObject.type.nameOfType}; {inventoryObject.name}
 
-                                <button
-                                    onClick={
-                                        () => history.push(`/inventory/${inventoryObject.id}`)}>Edit
-                                </button>
+                                {localStorage.getItem("inventory__admin") ?
 
-                                <button className="inventoryButton"
-                                    onClick={() => {
-                                        deleteItem(inventoryObject.id)
-                                    }}>
-                                    Delete
-                                </button>
+                                    <button
+                                        onClick={
+                                            () => history.push(`/inventory/${inventoryObject.id}`)}>Edit
+                                    </button>
+                                    : null
+                                }
+
+                                {localStorage.getItem("inventory__admin") ?
+
+                                    <button className="inventoryButton"
+                                        onClick={() => {
+                                            deleteItem(inventoryObject.id)
+                                        }}>
+                                        Delete
+                                    </button>
+                                    : null
+                                }
+
                             </p>
 
                         </div>
                     )
                 }
             </div>
+
+            {localStorage.getItem("inventory__admin") ?
+
             <button
                 onClick={
                     () => history.push("/inventory/create")}>Create New Item
             </button>
+
+            : null
+            }
         </>
     )
 }
