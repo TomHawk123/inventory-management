@@ -32,7 +32,7 @@ export const InventoryForm = () => {
             name: item.name,
             userId: parseInt(localStorage.getItem("inventory__user")),
             typeId: parseInt(item.typeId),
-            quantity: item.quantity,
+            quantity: parseInt(item.quantity),
             picture: item.picture
         }
 

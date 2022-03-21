@@ -20,6 +20,9 @@ export const Login = () => {
             .then(exists => {
                 if (exists) {
                     localStorage.setItem("inventory__user", exists.id)
+                    if (exists.admin === true) {
+                        localStorage.setItem("inventory__admin", exists.id)
+                    }
                     history.push("/")
                 } else {
                     existDialog.current.showModal()
