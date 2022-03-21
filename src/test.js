@@ -1,16 +1,18 @@
-import { fetchUserInventory } from "./components/ApiManager"
-
-<button
-onClick = {
-    ()=>{
-        fetchUserInventory()
-        if (inventoryObject.id !== fetchUserInventory.map(item=>item.userId)){
-
-        }
+export const send = object => {
+    const newObj = {
+        name: object.name,
+        description: object.description
     }
-}>
-    Checkout
-</button>
+    const fetchOption = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(newObj)
+    }
+    return 
+}
 
+// Boolean approach
 
-
+// {user.admin===true? <button> </button> : null}
