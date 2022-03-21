@@ -59,7 +59,7 @@ export const Register = (props) => {
                     <label htmlFor="name"> Full Name </label>
                     <input onChange={updateUser}
                         type="text" id="name" className="form-control"
-                        placeholder="Enter your name" required autoFocus />
+                        placeholder="Employee name" required autoFocus />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="address"> Address </label>
@@ -67,11 +67,11 @@ export const Register = (props) => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="phone"> Phone Number </label>
-                    <input onChange={updateUser} type="text" id="phone" className="form-control" placeholder="555-555-5555" required />
+                    <input onChange={updateUser} type="text" id="phone" className="form-control" placeholder="(555)555-5555" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="email"> Email address </label>
-                    <input onChange={updateUser} type="email" id="email" className="form-control" placeholder="Email address" required />
+                    <input onChange={updateUser} type="email" id="email" className="form-control" placeholder="email@address.com" required />
                 </fieldset>
                 <fieldset>
                     <button type="submit"> Register </button>

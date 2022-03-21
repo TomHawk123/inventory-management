@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { fetchUsers } from "../ApiManager"
 
 // export a function that will return the HTML
@@ -44,6 +45,11 @@ export const UsersList = () => {
                     </p>
                 )
             }
+
+            <section className="link--register">
+                <Link to="/register">Add New Employee</Link>
+            </section>
+
         </>
     )
 }
