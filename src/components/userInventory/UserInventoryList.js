@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { fetchInventoryTypes, fetchUserInventory, returnItem } from "../ApiManager"
+import { fetchAllUserInventory, fetchInventoryTypes, fetchUserInventory, returnItem } from "../ApiManager"
 
 // export a function that will return the HTML
 export const UserInventoryList = () => {
@@ -13,12 +13,20 @@ export const UserInventoryList = () => {
     useEffect(
         () => {
             // use expand to get access to user properties  
-            fetchUserInventory()
-                .then(inventoryArray => {
-                    setUserInventoryList(inventoryArray)
-                    setInventorySwitch(true)
+            if (localStorage.getItem("inventory__admin")) {
+                fetchAllUserInventory()
+                    .then(inventoryArray => {
+                        setUserInventoryList(inventoryArray)
+                        setInventorySwitch(true)
+                    })
+            } else {
+                fetchUserInventory()
+                    .then(inventoryArray => {
+                        setUserInventoryList(inventoryArray)
+                        setInventorySwitch(true)
 
-                })
+                    })
+            }
         },
         []
     )
@@ -89,13 +97,22 @@ export const UserInventoryList = () => {
                                 onClick={
                                     () => {
                                         returnItem(inventoryObject.inventory, inventoryObject.id)
-                                        .then(() => {
-                                            fetchUserInventory()
-                                                .then(inventoryArray => {
-                                                    setUserInventoryList(inventoryArray)
-                                                    setInventorySwitch(!inventorySwitch)
-                                                })
-                                        })
+                                            .then(() => {
+                                                if (localStorage.getItem("inventory__admin")) {
+                                                    fetchAllUserInventory()
+                                                        .then(inventoryArray => {
+                                                            setUserInventoryList(inventoryArray)
+                                                            setInventorySwitch(true)
+                                                        })
+                                                } else {
+                                                    fetchUserInventory()
+                                                        .then(inventoryArray => {
+                                                            setUserInventoryList(inventoryArray)
+                                                            setInventorySwitch(true)
+
+                                                        })
+                                                }
+                                            })
                                     }
                                 }
                             >
@@ -116,5 +133,3 @@ export const UserInventoryList = () => {
     // then delete the item from user's inventory
         // else use fetch call with "PATCH" fetch option to subtract one from user's inventory and add one to master inventory
 
-
-        // date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()
