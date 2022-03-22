@@ -55,24 +55,45 @@ export const Register = (props) => {
 
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Please Register for Windows & Doors Inventory Management</h1>
+
                 <fieldset>
                     <label htmlFor="name"> Full Name </label>
                     <input onChange={updateUser}
                         type="text" id="name" className="form-control"
                         placeholder="Employee name" required autoFocus />
                 </fieldset>
+
                 <fieldset>
                     <label htmlFor="address"> Address </label>
                     <input onChange={updateUser} type="text" id="address" className="form-control" placeholder="Street address" required />
                 </fieldset>
+
                 <fieldset>
                     <label htmlFor="phone"> Phone Number </label>
                     <input onChange={updateUser} type="text" id="phone" className="form-control" placeholder="(555)555-5555" required />
                 </fieldset>
+
                 <fieldset>
                     <label htmlFor="email"> Email address </label>
                     <input onChange={updateUser} type="email" id="email" className="form-control" placeholder="email@address.com" required />
                 </fieldset>
+
+                <fieldset>
+                    <div className="form-group">
+                        <label htmlFor="name">Manager?</label>
+                        <input
+                            type="checkbox"
+                            onChange={
+                                e => {
+                                    const copy = { ...user }
+                                    copy.admin = e.target.checked
+                                    setUser(copy)
+                                }
+                            }
+                        />
+                    </div>
+                </fieldset>
+
                 <fieldset>
                     <button type="submit"> Register </button>
                 </fieldset>
