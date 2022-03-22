@@ -33,16 +33,20 @@ export const UsersList = () => {
 
             {
                 usersArray.map(
-                    userObject => <p key={`userItem--${userObject.id}`}>{userObject.name}
+                    userObject => {
+                        if (userObject.id !== parseInt(localStorage.getItem("inventory__admin"))) {
+                            return <p key={`userItem--${userObject.id}`}>{userObject.name}
 
-                        <button className="usersButton"
-                            onClick={() => {
-                                deleteItem(userObject.id)
-                            }}>
-                            Terminate Employment
-                        </button>
+                                <button className="usersButton"
+                                    onClick={() => {
+                                        deleteItem(userObject.id)
+                                    }}>
+                                    Terminate Employment
+                                </button>
+                            </p>
+                        }
 
-                    </p>
+                    }
                 )
             }
 

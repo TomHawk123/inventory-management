@@ -15,6 +15,10 @@ export const fetchUserInventory = () =>
     fetch(`${API}/userInventory?_expand=user&_expand=inventory&userId=${parseInt(localStorage.getItem("inventory__user"))}`)
         .then(r => r.json())
 
+export const fetchAllUserInventory = () =>
+    fetch(`${API}/userInventory?_expand=user&_expand=inventory`)
+        .then(r => r.json())
+
 export const fetchInventoryTypes = () =>
     fetch(`${API}/types`)
         .then(r => r.json())

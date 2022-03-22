@@ -60,22 +60,20 @@ export const InventoryList = () => {
 
 
                             <p>
-                                {inventoryObject.quantity > 0 ?
-                                    <button className="inventoryButton"
-                                        onClick={
-                                            () => {
-                                                sendUserItem(inventoryObject)
-                                                    .then(() => {
-                                                        return fetchInventory()
-                                                    })
-                                                    .then(inventoryArray => {
-                                                        setInventoryList(inventoryArray)
-                                                    })
-                                            }
-                                        }>Checkout
-                                    </button> :
-                                    null
-                                }
+                                {inventoryObject.quantity > 0 === true ? <button className="inventoryButton"
+
+                                    onClick={
+                                        () => {
+                                            sendUserItem(inventoryObject)
+                                                .then(() => {
+                                                    return fetchInventory()
+                                                })
+                                                .then(inventoryArray => {
+                                                    setInventoryList(inventoryArray)
+                                                })
+                                        }
+                                    }>Checkout
+                                </button> : null}
 
                                 {inventoryObject.quantity}X: {inventoryObject.type.nameOfType}; {inventoryObject.name}
 
@@ -108,36 +106,13 @@ export const InventoryList = () => {
 
             {localStorage.getItem("inventory__admin") ?
 
-            <button
-                onClick={
-                    () => history.push("/inventory/create")}>Create New Item
-            </button>
+                <button
+                    onClick={
+                        () => history.push("/inventory/create")}>Create New Item
+                </button>
 
-            : null
+                : null
             }
         </>
     )
 }
-
-// if inventory item quantity value is >= 1
-    // display the checkout button
-// else don't display the checkout button
-
-
-
-
-
-
-// Use assign method to add inventory object to user?
-// A:
-
-// const target = { a: 1, b: 2 };
-// const source = { b: 4, c: 5 };
-
-// const returnedTarget = Object.assign(target, source);
-
-// console.log(target);
-// // expected output: Object { a: 1, b: 4, c: 5 }
-
-// console.log(returnedTarget);
-// // expected output: Object { a: 1, b: 4, c: 5 }
