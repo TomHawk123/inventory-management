@@ -1,8 +1,153 @@
 .inventory__List {
-    display: flex;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
 }
 
-.inventoryButton {
-    width: 6rem;
-    height: 2.5rem;
+button:hover {
+    cursor: pointer;
+}
+
+.editButton {
+    color: #000;
+    position: absolute;
+    margin-left: 1.7rem;
+    margin-right: 2rem;
+    margin-top: 0rem;
+    width: 14px;
+    height: 2px;
+    border-radius: 1px;
+    border: solid 1px currentColor;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.editButton:before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: -1px;
+    width: 0px;
+    height: 0px;
+    border-left: solid 5px transparent;
+    border-right: solid 5px currentColor;
+    border-top: solid 2px transparent;
+    border-bottom: solid 2px transparent;
+}
+
+.inventoryDeleteButton {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs, 1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+        0 0 0 2px,
+        inset -2px 0 0,
+        inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-left: 3.45rem;
+    margin-bottom: .1rem;
+}
+
+.inventoryDeleteButton::after,
+.inventoryDeleteButton::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute
+}
+
+.inventoryDeleteButton::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px
+}
+
+.inventoryDeleteButton::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px
+}
+
+.inventoryDeleteButton:hover {
+    cursor: pointer;
+}
+
+.inventoryListParagraph {
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+
+#inventoryCheckoutButton {
+    color: #000;
+    position: absolute;
+    margin-top: 0.2rem;
+}
+
+#inventoryCheckoutButton:before {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 1px;
+    background-color: currentColor;
+}
+
+#inventoryCheckoutButton:after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 1px;
+    background-color: currentColor;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+#inventoryCheckoutButton:hover {
+    cursor: pointer;
+}
+
+.inventoryListCreateButton {
+
+    display: inline-block;
+    outline: 0;
+    text-align: center;
+    cursor: pointer;
+    border: 0;
+    color: #fff;
+    font-size: 12px;
+    border: 2px solid transparent;
+    border-color: #000;
+    color: #000;
+    background: transparent;
+    font-weight: 800;
+    line-height: 2rem;
+    transition: background, color .1s ease-in-out;
+    align-items: center;
+    margin-left: .4rem;
+    border-radius: 10%;
+
+}
+
+.inventoryListCreateButton:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+#totalItemsMessage {
+    margin-left: .4rem;
+    margin-bottom: 1rem;
 }

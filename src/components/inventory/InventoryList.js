@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { fetchInventory, fetchUserInventory, sendUserItem } from "../ApiManager"
+import "./Inventory.css"
 
 // export a function that will return the HTML
 export const InventoryList = () => {
@@ -30,7 +31,7 @@ export const InventoryList = () => {
             if (inventoryList.length === 1) {
                 updateMessage("You have 1 inventory item")
             } else {
-                updateMessage(`You have ${inventoryList.length} inventory items`)
+                updateMessage(`You have ${inventoryList.length} inventory line items`)
             }
         },
         [inventoryList]
@@ -49,70 +50,77 @@ export const InventoryList = () => {
     return (
         <>
 
-            <div>{totalItemsMessage}</div>
+            <div id="totalItemsMessage">{totalItemsMessage}</div>
 
+            {localStorage.getItem("inventory__admin") ?
 
-            <div>
+                <button className="inventoryListCreateButton"
+                    onClick={
+                        () => history.push("/inventory/create")}>Create New
+                </button>
+
+                : null
+            }
+
+            <div id="centerpiece">
                 {
                     inventoryList.map(
-                        inventoryObject => <div className="inventory__List" key={`deleteItem--${inventoryObject.id}`}>
+                        inventoryObject => <div key={`deleteItem--${inventoryObject.id}`} className="inventory__List">
 
 
 
-                            <p>
-                                {inventoryObject.quantity > 0 === true ? <button className="inventoryButton"
 
-                                    onClick={
-                                        () => {
-                                            sendUserItem(inventoryObject)
-                                                .then(() => {
-                                                    return fetchInventory()
-                                                })
-                                                .then(inventoryArray => {
-                                                    setInventoryList(inventoryArray)
-                                                })
-                                        }
-                                    }>Checkout
-                                </button> : null}
 
-                                {inventoryObject.quantity}X: {inventoryObject.type.nameOfType}; {inventoryObject.name}
+                            {inventoryObject.quantity}X: {inventoryObject.type.nameOfType}; {inventoryObject.name}
+
+                            <p className="inventoryListParagraph">
+
+                            </p>
+
+                            <article className="buttonContainer">
+
+                                {inventoryObject.quantity > 0 === true ?
+
+                                    <div id="inventoryCheckoutButton"
+                                        onClick={
+                                            () => {
+                                                sendUserItem(inventoryObject)
+                                                    .then(() => {
+                                                        return fetchInventory()
+                                                    })
+                                                    .then(inventoryArray => {
+                                                        setInventoryList(inventoryArray)
+                                                    })
+                                            }
+                                        }>
+                                    </div> : null}
 
                                 {localStorage.getItem("inventory__admin") ?
 
-                                    <button
+                                    <button className="editButton"
                                         onClick={
-                                            () => history.push(`/inventory/${inventoryObject.id}`)}>Edit
+                                            () => history.push(`/inventory/${inventoryObject.id}`)}>
                                     </button>
                                     : null
                                 }
 
                                 {localStorage.getItem("inventory__admin") ?
 
-                                    <button className="inventoryButton"
+                                    <div className="inventoryDeleteButton"
                                         onClick={() => {
                                             deleteItem(inventoryObject.id)
                                         }}>
-                                        Delete
-                                    </button>
+                                    </div>
                                     : null
                                 }
 
-                            </p>
+                            </article>
 
                         </div>
                     )
                 }
             </div>
 
-            {localStorage.getItem("inventory__admin") ?
-
-                <button
-                    onClick={
-                        () => history.push("/inventory/create")}>Create New Item
-                </button>
-
-                : null
-            }
         </>
     )
 }

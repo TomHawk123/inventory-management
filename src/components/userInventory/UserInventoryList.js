@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { fetchAllUserInventory, fetchInventoryTypes, fetchUserInventory, returnItem } from "../ApiManager"
+import "./UserInventory.css"
 
 // export a function that will return the HTML
 export const UserInventoryList = () => {
@@ -51,11 +52,20 @@ export const UserInventoryList = () => {
 
     useEffect(
         () => {
-            if (userInventoryArray.length === 1) {
-                updateMessage("You have 1 inventory item")
+            if (localStorage.getItem("inventory__admin")) {
+                if (userInventoryArray.length === 1) {
+                    updateMessage("There is 1 inventory item checked out.")
+                }else {
+                    updateMessage(`There are ${userInventoryArray.length} inventory items checked out.`)
+                }
             } else {
-                updateMessage(`You have ${userInventoryArray.length} inventory items`)
+                if (userInventoryArray.length === 1) {
+                    updateMessage("You have 1 inventory item")
+                } else {
+                    updateMessage(`You have ${userInventoryArray.length} inventory items`)
+                }
             }
+
         },
         [userInventoryArray]
     )
@@ -65,7 +75,7 @@ export const UserInventoryList = () => {
     return (
         <>
 
-            <div>{totalItemsMessage}</div>
+            <div id="itemsNumberMessage">{totalItemsMessage}</div>
 
             {
                 userInventoryArray.map(
@@ -92,8 +102,9 @@ export const UserInventoryList = () => {
                         // seconds as 2 digits (ss)
                         const seconds = ("0" + date_ob.getSeconds()).slice(-2);
 
-                        return <p key={`inventoryItem--${inventoryObject.id}`}>{inventoryObject.inventory.type?.nameOfType}; {inventoryObject.inventory.name} checked out at {hours}:{minutes}:{seconds} on {month}/{date}/{year} by {inventoryObject.user.name}
-                            <button
+                        return <p key={`inventoryItem--${inventoryObject.id}`}>
+
+                            <button id="userInventoryButton"
                                 onClick={
                                     () => {
                                         returnItem(inventoryObject.inventory, inventoryObject.id)
@@ -118,6 +129,9 @@ export const UserInventoryList = () => {
                             >
                                 Return
                             </button>
+
+                            {inventoryObject.inventory.type?.nameOfType}; {inventoryObject.inventory.name} checked out at {hours}:{minutes}:{seconds} on {month}/{date}/{year} {localStorage.getItem("inventory__admin") ? `by ${inventoryObject.user.name}` : null}
+
                         </p>
                     }
                 )
@@ -125,11 +139,3 @@ export const UserInventoryList = () => {
         </>
     )
 }
-
-
-
-// STRETCH GOAL: 
-// if quantity property of userInventory is 0, 
-    // then delete the item from user's inventory
-        // else use fetch call with "PATCH" fetch option to subtract one from user's inventory and add one to master inventory
-
