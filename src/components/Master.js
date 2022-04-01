@@ -5,6 +5,7 @@ import { NavBar } from "./nav/NavBar";
 import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
 import "./Master.css";
+import { InventoryList } from "./inventory/InventoryList";
 
 export const Master = () => (
   <>

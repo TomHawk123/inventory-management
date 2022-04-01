@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { fetchUsers } from "../ApiManager"
+import "./Users.css"
 
 // export a function that will return the HTML
 export const UsersList = () => {
@@ -30,32 +31,42 @@ export const UsersList = () => {
 
     return (
         <>
-
+            <div className="userListSpacer"></div>
             {
                 usersArray.map(
                     userObject => {
-                        if (userObject.id !== parseInt(localStorage.getItem("inventory__admin"))) {
-                            return <p key={`userItem--${userObject.id}`}>{userObject.name}
 
-                                <button className="usersButton"
-                                    onClick={() => {
-                                        deleteItem(userObject.id)
-                                    }}>
-                                    Terminate Employment
-                                </button>
-                            </p>
+                        if (userObject.id !== parseInt(localStorage.getItem("inventory__admin"))) {
+
+                            return <div key={`userItem--${userObject.id}`} id="employeeList">
+
+                                <p className="employees" key={`userItem--${userObject.id}`}>{userObject.name}
+
+                                    <div className="termButton"
+                                        onClick={() => {
+                                            deleteItem(userObject.id)
+                                        }}>
+
+                                    </div>
+
+                                </p>
+
+                            </div>
+
                         }
 
                     }
                 )
             }
 
-            <section className="link--register">
-                <Link to="/register">Add New Employee</Link>
-            </section>
+            <div className="addEmployee">
+                <button>
+                    <Link to="/register">Add New Employee</Link>
+                </button>
+            </div>
+
+
 
         </>
     )
 }
-
-
