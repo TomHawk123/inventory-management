@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { fetchInventory, fetchUserInventory, sendUserItem } from "../ApiManager"
 import "./Inventory.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
 
 // export a function that will return the HTML
 export const InventoryList = () => {
@@ -81,7 +83,7 @@ export const InventoryList = () => {
 
                                 {inventoryObject.quantity > 0 === true ?
 
-                                    <div id="inventoryCheckoutButton"
+                                    <button
                                         onClick={
                                             () => {
                                                 sendUserItem(inventoryObject)
@@ -93,24 +95,30 @@ export const InventoryList = () => {
                                                     })
                                             }
                                         }>
-                                    </div> : null}
+                                        <FontAwesomeIcon icon={faPlus} />
+
+                                    </button> : null}
 
                                 {localStorage.getItem("inventory__admin") ?
 
-                                    <button className="editButton"
+                                    <button
                                         onClick={
                                             () => history.push(`/inventory/${inventoryObject.id}`)}>
+                                        <FontAwesomeIcon icon={faPencil} />
+
                                     </button>
                                     : null
                                 }
 
                                 {localStorage.getItem("inventory__admin") ?
 
-                                    <div className="inventoryDeleteButton"
+                                    <button
                                         onClick={() => {
                                             deleteItem(inventoryObject.id)
                                         }}>
-                                    </div>
+                                        <FontAwesomeIcon icon={faTrash} />
+
+                                    </button>
                                     : null
                                 }
 
