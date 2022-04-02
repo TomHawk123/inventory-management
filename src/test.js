@@ -4,7 +4,6 @@
 
 // const thing = () => {
 
-
 //     return {good || bad ? "on" : "off"}
 // }
 
@@ -15,30 +14,26 @@
 //     console.log("on")
 // }
 
-
-
-
-
-
-
-{ inventoryObject.quantity > 0 === true ? <button className="inventoryButton"
-
-onClick={
-    () => {
+{
+  inventoryObject.quantity > 0 === true ? (
+    <button
+      className="inventoryButton"
+      onClick={() => {
         sendUserItem(inventoryObject)
-            .then(() => {
-                return fetchInventory()
-            })
-            .then(inventoryArray => {
-                setInventoryList(inventoryArray)
-            })
-    }
-}>Checkout
-</button> : null }
+          .then(() => {
+            return fetchInventory();
+          })
+          .then((inventoryArray) => {
+            setInventoryList(inventoryArray);
+          });
+      }}
+    >
+      Checkout
+    </button>
+  ) : null;
+}
 
-fetchUserInventory()
-                .then(inventoryArray => {
-                    setUserInventoryList(inventoryArray)
-                    setInventorySwitch(true)
-
-                })
+fetchUserInventory().then((inventoryArray) => {
+  setUserInventoryList(inventoryArray);
+  setInventorySwitch(true);
+});

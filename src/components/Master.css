@@ -15,7 +15,12 @@ textarea {
   line-height: 1.5;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Patua One", serif;
   letter-spacing: 2px;
 }
@@ -23,12 +28,12 @@ h1, h2, h3, h4, h5, h6 {
 p {
   margin-bottom: 1.5em;
 }
+
 @import url(users/Users.css);
-@import url('https://fonts.googleapis.com/css?family=Fjalla+One'); 
+@import url("https://fonts.googleapis.com/css?family=Fjalla+One");
 @import url(auth/Login.css);
 
 body {
-  font-family: 'Fjalla One', sans-serif;
+  font-family: "Fjalla One", sans-serif;
   height: 95vh;
 }
-
