@@ -41,11 +41,9 @@ export const InventoryList = () => {
     const deleteItem = (id) => {
         fetch(`https://inventory-api-eydh4.ondigitalocean.app/inventories/${id}`, {
             method: "DELETE",
-        })
-            .then(fetchInventory)``
-            .then((inventoryArray) => {
-                setInventoryList(inventoryArray);
-            });
+        }).then(fetchInventory)``.then((inventoryArray) => {
+            setInventoryList(inventoryArray);
+        });
     };
 
     return (

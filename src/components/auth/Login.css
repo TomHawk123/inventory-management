@@ -46,7 +46,6 @@ fieldset {
 
 .container--login {
   text-align: center;
-
 }
 
 .form--login {
@@ -58,7 +57,6 @@ fieldset {
   background-blend-mode: overlay;
   background-repeat: no-repeat;
   margin-top: 2rem;
-
 }
 
 .button--close {

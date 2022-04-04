@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { InventoryForm } from "./inventory/AddInventoryForm";
-// import { Item } from "./inventory/CreateItem";
 import { EditInventoryForm } from "./inventory/EditInventoryForm";
 import { InventoryList } from "./inventory/InventoryList";
 import { UserInventoryList } from "./userInventory/UserInventoryList";

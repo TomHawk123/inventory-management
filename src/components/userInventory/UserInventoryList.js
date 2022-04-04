@@ -15,7 +15,6 @@ export const UserInventoryList = () => {
   const [types, setTypes] = useState([]);
   const [inventorySwitch, setInventorySwitch] = useState(false);
 
-  // fetch inventory list when inventory state changes
   useEffect(() => {
     // use expand to get access to user properties
     if (localStorage.getItem("inventory__admin")) {
@@ -122,8 +121,12 @@ export const UserInventoryList = () => {
               >
                 Return
               </button>
-              <b>{inventoryObject.inventory.name} {inventoryObject.inventory.type?.nameOfType}</b> checked out at {hours}:{minutes}:
-              {seconds} on {month}/{date}/{year}{" "}
+              <b>
+                {inventoryObject.inventory.name}{" "}
+                {inventoryObject.inventory.type?.nameOfType}
+              </b>{" "}
+              checked out at {hours}:{minutes}:{seconds} on {month}/{date}/
+              {year}{" "}
               {localStorage.getItem("inventory__admin")
                 ? `by ${inventoryObject.user.name}`
                 : null}

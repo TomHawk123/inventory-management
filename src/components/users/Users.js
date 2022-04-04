@@ -19,7 +19,7 @@ export const UsersList = () => {
           setUsersArray(usersArray);
         });
     },
-    [] // DON'T FORGET to add userList when state change monitoring is necessary
+    []
   );
 
   const deleteItem = (id) => {
