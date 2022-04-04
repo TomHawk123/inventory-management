@@ -5,6 +5,16 @@
   flex-basis: 2rem;
   text-align: left;
   flex-direction: row-reverse;
+  font: 16px Georgia, serif;
+}
+
+#userListContainer {
+  text-align: center;
+}
+
+#userList {
+  display: inline-block;
+  text-align: left;
 }
 
 .addEmployee {
@@ -63,4 +73,45 @@
 
 .termButton:hover {
   cursor: pointer;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+}
+
+#addEmployee {
+  display: inline-block;
+  outline: 0;
+  text-align: center;
+  cursor: pointer;
+  border: 0;
+  color: #fff;
+  font-size: 14px;
+  border: 1px solid transparent;
+  border-color: #000;
+  color: #000;
+  background: transparent;
+  font-weight: 800;
+  line-height: 30px;
+  transition: background, color 0.1s ease-in-out;
+  border-radius: 5%;
+  margin-right: 0.5rem;
+  margin-left: 0.2rem;
+  box-shadow: 3px 3px 3px;
+}
+
+.link {
+  color: #000;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: white;
+  text-decoration: none;
+}
+
+#addEmployee:hover {
+  background-color: #000;
+  color: #fff;
 }
