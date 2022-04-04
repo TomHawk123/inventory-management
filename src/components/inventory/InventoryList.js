@@ -39,7 +39,7 @@ export const InventoryList = () => {
     }, [inventoryList]);
 
     const deleteItem = (id) => {
-        fetch(`http://localhost:8088/inventories/${id}`, {
+        fetch(`https://inventory-api-eydh4.ondigitalocean.app/inventories/${id}`, {
             method: "DELETE",
         })
             .then(fetchInventory)``
