@@ -13,7 +13,7 @@ export const UsersList = () => {
   // fetch user list when user state changes
   useEffect(
     () => {
-      fetch("http://localhost:8088/users")
+      fetch("https://inventory-api-eydh4.ondigitalocean.app/users")
         .then((r) => r.json())
         .then((usersArray) => {
           setUsersArray(usersArray);
@@ -23,7 +23,7 @@ export const UsersList = () => {
   );
 
   const deleteItem = (id) => {
-    fetch(`http://localhost:8088/users/${id}`, {
+    fetch(`https://inventory-api-eydh4.ondigitalocean.app/users/${id}`, {
       method: "DELETE",
     })
       .then(fetchUsers)

@@ -1,5 +1,5 @@
 // store API url
-const API = "http://localhost:8088";
+const API = "https://inventory-api-eydh4.ondigitalocean.app";
 
 // export a fetch call for each data type?
 // A:

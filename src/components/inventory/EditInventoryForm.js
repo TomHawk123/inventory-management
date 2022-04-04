@@ -10,7 +10,7 @@ export const EditInventoryForm = () => {
 
   useEffect(() => {
     fetchInventoryTypes().then((type) => updateItemType(type));
-    return fetch(`http://localhost:8088/inventories/${itemId}`)
+    return fetch(`https://inventory-api-eydh4.ondigitalocean.app/inventories/${itemId}`)
       .then((r) => r.json())
       .then((inventoryObject) => update(inventoryObject));
   }, []);
