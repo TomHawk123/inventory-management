@@ -1,11 +1,10 @@
 .employees {
-  display: flex;
-  justify-content: center;
+  display: inline-block;
   align-items: left;
   flex-basis: 2rem;
   text-align: left;
-  flex-direction: row-reverse;
   font: 16px Georgia, serif;
+  margin-top: 1rem;
 }
 
 #userListContainer {
@@ -73,6 +72,7 @@
 
 .termButton:hover {
   cursor: pointer;
+  color: white;
 }
 
 .deleteButton {
