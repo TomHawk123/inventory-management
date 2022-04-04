@@ -57,7 +57,7 @@ export const Register = (props) => {
 
       <form className="form--login" onSubmit={handleRegister}>
         <h1 className="h3 mb-3 font-weight-normal">
-          Please Register for Windows & Doors Inventory Management
+          Maggie Mac's Windows & Doors New Employee Form
         </h1>
 
         <fieldset>

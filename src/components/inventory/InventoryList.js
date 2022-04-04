@@ -67,41 +67,41 @@ export const InventoryList = () => {
             <div id="centerpiece">
                 {
                     inventoryList.map(
-                        inventoryObject => <div key={`deleteItem--${inventoryObject.id}`} className="inventory__List">
+                        inventoryObject => <div key={`deleteItem--${inventoryObject.id}`} className="inventory__List"
 
+                            onClick={
+                                () => {
+                                    if (inventoryObject.quantity > 0) {
+                                        sendUserItem(inventoryObject)
+                                            .then(() => {
+                                                return fetchInventory()
+                                            })
+                                            .then(inventoryArray => {
+                                                setInventoryList(inventoryArray)
+                                            })
+                                    }
+                                }
+                            }>
 
-
-
-
-                            {inventoryObject.quantity}X: {inventoryObject.type.nameOfType}; {inventoryObject.name}
+                            {inventoryObject.name} {inventoryObject.type.nameOfType}
 
                             <p className="inventoryListParagraph">
 
                             </p>
 
+                            <div id="imgWrapper">
+                                <img id="inventoryImg" src={inventoryObject.picture} />
+                            </div>
+
+
+                            {inventoryObject.quantity > 0 ? <p>In Stock <b>{inventoryObject.quantity}</b></p> : <b>Out of Stock</b>}
+
                             <article className="buttonContainer">
-
-                                {inventoryObject.quantity > 0 === true ?
-
-                                    <button
-                                        onClick={
-                                            () => {
-                                                sendUserItem(inventoryObject)
-                                                    .then(() => {
-                                                        return fetchInventory()
-                                                    })
-                                                    .then(inventoryArray => {
-                                                        setInventoryList(inventoryArray)
-                                                    })
-                                            }
-                                        }>
-                                        <FontAwesomeIcon icon={faPlus} />
-
-                                    </button> : null}
 
                                 {localStorage.getItem("inventory__admin") ?
 
                                     <button
+                                        id="editButton"
                                         onClick={
                                             () => history.push(`/inventory/${inventoryObject.id}`)}>
                                         <FontAwesomeIcon icon={faPencil} />
@@ -110,9 +110,27 @@ export const InventoryList = () => {
                                     : null
                                 }
 
+                                <button
+                                    onClick={
+                                        () => {
+                                            if (inventoryObject.quantity > 0) {
+                                                sendUserItem(inventoryObject)
+                                                    .then(() => {
+                                                        return fetchInventory()
+                                                    })
+                                                    .then(inventoryArray => {
+                                                        setInventoryList(inventoryArray)
+                                                    })
+                                            }
+                                        }
+                                    }>
+                                    <FontAwesomeIcon icon={faPlus} />
+
+                                </button>
+
                                 {localStorage.getItem("inventory__admin") ?
 
-                                    <button
+                                    <button id="deleteButton"
                                         onClick={() => {
                                             deleteItem(inventoryObject.id)
                                         }}>
