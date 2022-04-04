@@ -10,7 +10,7 @@ input,
 select,
 textarea {
   color: #404040;
-  font-family: "Georgia", Georgia, 'Times New Roman', Times, serif, sans-serif;
+  font-family: "Georgia", Georgia, "Times New Roman", Times, serif, sans-serif;
   font-size: 14px;
   line-height: 1.5;
 }

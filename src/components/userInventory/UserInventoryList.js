@@ -94,42 +94,43 @@ export const UserInventoryList = () => {
         const seconds = ("0" + date_ob.getSeconds()).slice(-2);
 
         return (
-          <div id="UserInventoryList--container" key={`inventoryItem--${inventoryObject.id}`}>
-            <div id="userInventoryList--paragrpah">
+          <div
+            id="UserInventoryList--container"
+            key={`inventoryItem--${inventoryObject.id}`}
+          >
+            <div className="userInventoryList--paragrpah">
               <button
                 id="userInventoryButton"
                 onClick={() => {
-                  returnItem(inventoryObject.inventory, inventoryObject.id)
-                    .then(
-                      () => {
-                        if (localStorage.getItem("inventory__admin")) {
-                          fetchAllUserInventory().then((inventoryArray) => {
-                            setUserInventoryList(inventoryArray);
-                            setInventorySwitch(true);
-                          });
-                        } else {
-                          fetchUserInventory().then((inventoryArray) => {
-                            setUserInventoryList(inventoryArray);
-                            setInventorySwitch(true);
-                          });
-                        }
-                      }
-                    );
-                }}>
+                  returnItem(
+                    inventoryObject.inventory,
+                    inventoryObject.id
+                  ).then(() => {
+                    if (localStorage.getItem("inventory__admin")) {
+                      fetchAllUserInventory().then((inventoryArray) => {
+                        setUserInventoryList(inventoryArray);
+                        setInventorySwitch(true);
+                      });
+                    } else {
+                      fetchUserInventory().then((inventoryArray) => {
+                        setUserInventoryList(inventoryArray);
+                        setInventorySwitch(true);
+                      });
+                    }
+                  });
+                }}
+              >
                 Return
               </button>
-              {inventoryObject.inventory.type?.nameOfType};{" "}
-              {inventoryObject.inventory.name} checked out at {hours}:{minutes}:
+              <b>{inventoryObject.inventory.name} {inventoryObject.inventory.type?.nameOfType}</b> checked out at {hours}:{minutes}:
               {seconds} on {month}/{date}/{year}{" "}
               {localStorage.getItem("inventory__admin")
                 ? `by ${inventoryObject.user.name}`
                 : null}
             </div>
           </div>
-
         );
       })}
     </>
   );
 };
-
