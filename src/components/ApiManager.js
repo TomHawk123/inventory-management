@@ -1,8 +1,6 @@
 // store API url
-const API = "https://inventory-api-eydh4.ondigitalocean.app";
+const API = "https://inventory-api-eydh4.ondigitalocean.appg";
 
-// export a fetch call for each data type?
-// A:
 export const fetchInventory = () =>
   fetch(`${API}/inventories?_expand=user&_expand=type`).then((r) => r.json());
 
