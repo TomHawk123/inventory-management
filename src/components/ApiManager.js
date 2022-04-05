@@ -1,5 +1,5 @@
 // store API url
-const API = "https://inventory-api-eydh4.ondigitalocean.appg";
+const API = "https://inventory-api-eydh4.ondigitalocean.app";
 
 export const fetchInventory = () =>
   fetch(`${API}/inventories?_expand=user&_expand=type`).then((r) => r.json());
