@@ -1,3 +1,5 @@
+Fork code and in terminal, navigate to the appropriate folder and run "serve"
+
 In Google Chrome, navigate to http://localhost:3000
 
 Enter an authorized user's login credentials and click "Login"
